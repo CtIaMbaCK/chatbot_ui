@@ -64,7 +64,7 @@ export default function VideoHero() {
               alignItems: { xs: "center", md: "flex-end" },
             }}
           >
-            <Typography sx={{ xs: "0.6rem", md: "1.4rem" }}>
+            <Typography sx={{ xs: "0.6rem", md: "1.4rem", color:"black"}}>
               Ngoài việc trang bị kiến thức và kỹ năng chuyên môn vững chắc, Văn Lang còn chú trọng
               nuôi dưỡng tư duy nghiên cứu cho người học, giúp họ nhạy bén với ý tưởng mới và sẵn
               sàng tạo ra những đột phá sáng tạo.

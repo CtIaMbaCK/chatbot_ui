@@ -4,11 +4,16 @@ import LoadingDots from "@/src/components/LoadingDot";
 import { useChatAdmin, useChatStudent } from "@/src/services/hooks/hookChat";
 import SendIcon from "@mui/icons-material/Send";
 import {
-    Box,
-    CircularProgress,
-    Container,
-    TextareaAutosize,
-    Typography,
+  Box,
+  CircularProgress,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextareaAutosize,
+  Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { motion } from "framer-motion";
@@ -23,6 +28,14 @@ interface Message {
 }
 
 export default function ChatComponent() {
+
+  const [model, setModel] = React.useState('');
+  const handleChange = (event: SelectChangeEvent) => {
+    const selectedModel = event.target.value;
+    console.log("Selected model:", selectedModel);
+    setModel(event.target.value as string);
+  };
+  
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -69,7 +82,7 @@ export default function ChatComponent() {
       setLoading(false);
       setTimeout(() => {
         inputRef.current?.focus();
-  }, 0);
+      }, 0);
     }
   };
 
@@ -89,8 +102,8 @@ export default function ChatComponent() {
       <Container
         maxWidth="xl"
         sx={{
-          pt: "80px", 
-          pb: "100px", 
+          pt: "80px",
+          pb: "100px",
           display: "flex",
           justifyContent: "center",
         }}
@@ -112,6 +125,32 @@ export default function ChatComponent() {
           }}
         >
           <Box sx={{ flex: 1, p: 2 }}>
+
+            {/* them o day */}
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl sx={{
+                width: 120,
+                position: "absolute",
+                right: 30
+              }}>
+                <InputLabel id="demo-simple-select-label" sx={{
+                  color: "white",
+
+                }}>Model</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={model}
+                  label="Model"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"rag"}>RAG</MenuItem>
+                  <MenuItem value={"finetune"}>Finetune</MenuItem>
+
+                </Select>
+              </FormControl>
+            </Box>
+
             {chatMessages.map((m, i) => (
               <Box
                 key={i}

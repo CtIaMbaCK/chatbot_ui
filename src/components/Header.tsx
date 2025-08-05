@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/Settings';
 import LoginIcon from '@mui/icons-material/Login';
 import CallIcon from '@mui/icons-material/Call';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {
   AppBar,
   Box,
@@ -204,6 +205,21 @@ const Header = () => {
               </Button>
             </motion.div>
 
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                sx={{
+                  color: "white",
+                  fontWeight: "light",
+                }}
+              >
+                <Link href={"/guide/1-gioi-thieu"} style={{ textDecoration: "none", color: "white" }}
+                >
+                  Hướng dẫn sử dung
+                </Link>
+
+              </Button>
+            </motion.div>
+
 
 
             {/* Đăng Nhập / Đăng Xuất */}
@@ -350,6 +366,16 @@ const Header = () => {
               <ChatIcon />
             </ListItemIcon>
             <ListItemText primary={loggedIn ? "Chat Sinh Viên" : "Chat Tuyển Sinh"} />
+          </ListItemButton>
+
+          <ListItemButton onClick={() => {
+            router.push("/guide/1-gioi-thieu")
+            setDrawerOpen(!drawerOpen);
+          }}>
+            <ListItemIcon>
+              <MenuBookIcon />
+            </ListItemIcon>
+            <ListItemText primary="Hướng dẫn sử dụng" />
           </ListItemButton>
 
           <ListItemButton onClick={() => {

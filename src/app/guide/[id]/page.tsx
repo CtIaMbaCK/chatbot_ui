@@ -1,31 +1,109 @@
 'use client';
 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import LockIcon from '@mui/icons-material/Lock';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EmailIcon from '@mui/icons-material/Email';
-import PushPinIcon from '@mui/icons-material/PushPin';
+import InfoIcon from '@mui/icons-material/Info';
 import KeyIcon from '@mui/icons-material/Key';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import LockIcon from '@mui/icons-material/Lock';
+import PushPinIcon from '@mui/icons-material/PushPin';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Image from 'next/image';
 import { use } from 'react';
+
 
 type Params = {
   id: string;
 };
 
-
-
+const cardData = [
+  {
+    title: 'Giới thiệu',
+    image: '/bot.jpg',
+  },
+  {
+    title: 'Đăng ký',
+    image: '/dangky.png',
+  },
+  {
+    title: 'Đăng nhập',
+    image: '/dangnhap.png',
+  },
+  {
+    title: 'Quên mật khẩu',
+    image: '/changepass.png',
+  },
+  {
+    title: 'Hỗ trợ sử dụng Chatbot',
+    image: '/bot.jpg',
+  },
+  {
+    title: 'Hỗ trợ sử dụng Chatbot',
+    image: '/bot.jpg',
+  },
+];
 export default function Page({ params }: { params: Promise<Params> }) {
   const { id } = use(params);
 
   if (id === '1-gioi-thieu') {
     return (
-      <div className='text-black'>
-        <div>
-          <Image src={"/image.jpg"} alt='chatbot' width={50} height={50} ></Image>
+      <div className='text-black max-w-7xl '>
+        <div className='p-6 flex gap-10 mb-10 flex-wrap mx-auto'>
+          <CardMedia
+            component="img"
+            image={""}
+            alt={"chatbot"}
+            sx={{ height: 200, objectFit: 'cover' }}
+          />
+
+        </div>
+        <div className='p-6 flex gap-10 mb-10 flex-wrap mx-auto'>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 4,
+              justifyContent: 'center',
+              padding: 4,
+            }}
+          >
+            {cardData.map((item, idx) => (
+              <Card
+                key={idx}
+                sx={{
+                  width: 300,
+                  height: 300,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  borderRadius: 2,
+                  boxShadow: 3,
+                  transition: 'transform 0.2s ease',
+                  '&:hover': {
+                    transform: 'scale(1.03)',
+                    boxShadow: 6,
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={item.image}
+                  alt={item.title}
+                  sx={{ height: 200, objectFit: 'cover' }}
+                />
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}
+                  >
+                    {item.title}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+
         </div>
       </div>
     );

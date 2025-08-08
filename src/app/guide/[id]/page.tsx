@@ -9,8 +9,10 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import LockIcon from '@mui/icons-material/Lock';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import WavingHandIcon from '@mui/icons-material/WavingHand';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 import { use } from 'react';
 
 
@@ -22,88 +24,119 @@ const cardData = [
   {
     title: 'Giới thiệu',
     image: '/bot.jpg',
+    des: '/guide/1-gioi-thieu',
   },
   {
     title: 'Đăng ký',
     image: '/dangky.png',
+    des: '/guide/2.1-dang-ky',
   },
   {
     title: 'Đăng nhập',
     image: '/dangnhap.png',
+    des: '/guide/2.2-dang-nhap',
   },
   {
     title: 'Quên mật khẩu',
     image: '/changepass.png',
+    des: '/guide/2.3-quen-mat-khau',
   },
   {
     title: 'Hỗ trợ sử dụng Chatbot',
     image: '/bot.jpg',
+    des: '/guide/3-su-dung-chatbot',
   },
-  {
-    title: 'Hỗ trợ sử dụng Chatbot',
-    image: '/bot.jpg',
-  },
+  // {
+  //   title: 'Hỗ trợ sử dụng Chatbot',
+  //   image: '/bot.jpg',
+  // },
 ];
 export default function Page({ params }: { params: Promise<Params> }) {
   const { id } = use(params);
 
   if (id === '1-gioi-thieu') {
     return (
-      <div className='text-black max-w-7xl '>
-        <div className='p-6 flex gap-10 mb-10 flex-wrap mx-auto'>
-          <CardMedia
-            component="img"
-            image={""}
-            alt={"chatbot"}
-            sx={{ height: 200, objectFit: 'cover' }}
-          />
-
-        </div>
-        <div className='p-6 flex gap-10 mb-10 flex-wrap mx-auto'>
-          <Box
+      <div>
+        <div className='p-6 flex flex-col gap-10 mb-10 flex-wrap mx-auto'>
+          <Card
             sx={{
+              width: '100%',
+              height: 400,
               display: 'flex',
-              flexWrap: 'wrap',
-              gap: 4,
-              justifyContent: 'center',
-              padding: 4,
+              flexDirection: 'column',
+              borderRadius: 2,
+              boxShadow: 3,
             }}
           >
-            {cardData.map((item, idx) => (
-              <Card
-                key={idx}
-                sx={{
-                  width: 300,
-                  height: 300,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: 2,
-                  boxShadow: 3,
-                  transition: 'transform 0.2s ease',
-                  '&:hover': {
-                    transform: 'scale(1.03)',
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={item.image}
-                  alt={item.title}
-                  sx={{ height: 200, objectFit: 'cover' }}
-                />
-                <CardContent sx={{ textAlign: 'center' }}>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}
-                  >
-                    {item.title}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+            <CardMedia
+              component="img"
+              image={"/huongdan.webp"}
+              alt={"chatbot"}
+              sx={{ objectFit: 'cover' }}
+            />
+          </Card>
 
+          <div className='flex gap-2 items-center'>
+            <WavingHandIcon className='text-yellow-500' />
+            <p className='text-3xl text-[#2C2C2C] font-bold'>Xin chào!</p>
+          </div>
+
+          <div className='flex gap-2 items-center text-black'>
+            <p className='text-2xl'>Cảm ơn quý khách hàng đã tin dùng:</p>
+            <Link href={""} className='p-2 bg-blue-100 text-blue-500 rounded-md'>Đưa link web vào đây</Link>
+          </div>
+
+
+        </div>
+        <h1 className='text-[#2C2C2C] text-3xl font-bold px-6'>Nội dung hướng dẫn:</h1>
+        <div className='text-black max-w-7xl '>
+          <div className='flex gap-10 mb-10 flex-wrap mx-auto'>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 4,
+                // justifyContent: 'center',
+                padding: 4,
+              }}
+            >
+              {cardData.map((item, idx) => (
+                <Link href={`${item.des}`} key={idx} >
+                  <Card
+                    sx={{
+                      width: 300,
+                      height: 300,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      borderRadius: 2,
+                      boxShadow: 3,
+                      transition: 'transform 0.2s ease',
+                      '&:hover': {
+                        transform: 'scale(1.03)',
+                        boxShadow: 6,
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{ height: 200, objectFit: 'cover' }}
+                    />
+                    <CardContent sx={{ textAlign: 'center' }}>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}
+                      >
+                        {item.title}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </Box>
+
+          </div>
         </div>
       </div>
     );

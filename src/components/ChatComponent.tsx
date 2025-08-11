@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingDots from "@/src/components/LoadingDot";
-import { useChatAdmin, useChatStudent } from "@/src/services/hooks/hookChat";
+import { useChatAdmin, useChatLlm, useChatStudent } from "@/src/services/hooks/hookChat";
 import SendIcon from "@mui/icons-material/Send";
 import {
   Box,
@@ -31,10 +31,9 @@ export default function ChatComponent() {
 
   const [model, setModel] = React.useState('');
   const handleChange = (event: SelectChangeEvent) => {
-    const selectedModel = event.target.value;
-    console.log("Selected model:", selectedModel);
     setModel(event.target.value as string);
   };
+  
   
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,6 +49,7 @@ export default function ChatComponent() {
 
   const { postChatStudent } = useChatStudent();
   const { postChatAdmin } = useChatAdmin();
+  const { postChatLlm } = useChatLlm();
 
   const handleSend = async () => {
     const trimmed = inputText.trim();
@@ -63,9 +63,17 @@ export default function ChatComponent() {
       let res;
       const token = Cookies.get("access_token");
       if (token) {
-        res = await postChatStudent({ question: trimmed });
+        if (model === 'rag') {
+          res = await postChatStudent({ question: trimmed });
+        } else {
+          res = await postChatLlm({ question: trimmed });
+        }
       } else {
-        res = await postChatAdmin({ question: trimmed });
+        if (model === 'rag') {
+          res = await postChatAdmin({ question: trimmed });
+        } else {
+          res = await postChatLlm({ question: trimmed });
+        }
       }
 
       setChatMessages((prev) => [
@@ -95,7 +103,8 @@ export default function ChatComponent() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages]);
+    console.log(model)
+  }, [chatMessages,model]);
 
   return (
     <Box sx={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
@@ -127,18 +136,19 @@ export default function ChatComponent() {
           <Box sx={{ flex: 1, p: 2 }}>
 
             {/* them o day */}
-            <Box sx={{ minWidth: 120 }}>
+            <Box>
               <FormControl sx={{
-                width: 120,
+                width: { md:120, xs: 60 },
                 position: "absolute",
-                right: 30
+                right: 20,
+                overflow:{md:"visible", xs:"hidden"},
               }}>
-                <InputLabel id="demo-simple-select-label" sx={{
+                <InputLabel id="select-label" sx={{
                   color: "white",
 
                 }}>Model</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
+                  labelId="select-label"
                   id="demo-simple-select"
                   value={model}
                   label="Model"

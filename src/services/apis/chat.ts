@@ -9,3 +9,7 @@ export const chatAdmin = async (body: any) => {
 export const chatStudent = async (body: any) => {
   return await post("/chat/student", body);
 };
+
+export const chatLlm = async (body: any) => {
+  return await post("/llm_chat", body);
+};

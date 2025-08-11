@@ -1,4 +1,4 @@
-import { chatAdmin, chatStudent } from "../apis/chat";
+import { chatAdmin, chatStudent, chatLlm } from "../apis/chat";
 import { usePostAPI } from "./hookApi";
 
 const useChatAdmin = () => {
@@ -31,4 +31,19 @@ const useChatStudent = () => {
   };
 };
 
-export { useChatAdmin, useChatStudent };
+const useChatLlm = () => {
+  const {
+    loading,
+    post: postChatLlm,
+    error,
+    setError,
+  } = usePostAPI(chatLlm);
+  return {
+    loading,
+    postChatLlm,
+    error,
+    setError,
+  };
+}
+
+export { useChatAdmin, useChatStudent, useChatLlm };

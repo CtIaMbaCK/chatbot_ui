@@ -29,7 +29,7 @@ interface Message {
 
 export default function ChatComponent() {
 
-  const [model, setModel] = React.useState('');
+  const [model, setModel] = React.useState('rag');
   const handleChange = (event: SelectChangeEvent) => {
     setModel(event.target.value as string);
   };

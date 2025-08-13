@@ -189,12 +189,12 @@ const LoginPage = () => {
                       const data = res.data;
 
                       if (data?.access_token) {
-                        setAuthCookies(data.access_token); // ✅ Không cần refresh_token
-                        Cookies.set(ROLE_VALUE, data.role); // Lưu role
+                        setAuthCookies(data.access_token); 
+                        Cookies.set(ROLE_VALUE, data.role); 
 
                         toast.success("Đăng nhập Google thành công!");
 
-                        // ✅ Delay nhẹ để đảm bảo cookie đã được set
+                        //  Delay để đảm bảo cookie đã được set
                         setTimeout(() => {
                           const role = getUserRole();
 
@@ -218,6 +218,7 @@ const LoginPage = () => {
 
                 />
               </Box>
+
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                 Bạn chưa có tài khoản?{" "}
                 <Box

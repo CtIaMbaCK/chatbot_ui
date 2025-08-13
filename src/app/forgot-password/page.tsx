@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8, textAlign: "center" }}>
-      <Typography variant="h5" mb={3}>
+      <Typography variant="h5" mb={3} color={"black"}>
         Quên mật khẩu
       </Typography>
 

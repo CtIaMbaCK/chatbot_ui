@@ -172,8 +172,8 @@ export default function ChatComponent() {
               >
                 <Box
                   sx={{
-                    bgcolor: m.sender === "user" ? "#C1272D" : "#C4C4C4",
-                    color: m.sender === "user" ? "#fff" : "#000",
+                    bgcolor:  "#C4C4C4",
+                    color: "#000",
                     borderRadius: 2,
                     px: 2,
                     py: 1,
@@ -191,7 +191,7 @@ export default function ChatComponent() {
             ))}
 
             {loading && (
-              <Box sx={{ width: 80, borderRadius: 2, bgcolor: "#C4C4C4", px: 2, py: 1 }}>
+              <Box >
                 <LoadingDots />
               </Box>
             )}

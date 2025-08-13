@@ -12,18 +12,34 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 
+interface ValidateEmailFunction {
+  (email: string): boolean;
+}
+
+const validateEmail: ValidateEmailFunction = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async () => {
-    if (!email || !email.includes("@")) {
+  const handleCheckEmail = () => {
+    if (!validateEmail(email)) {
       toast.warning("Vui lòng nhập email hợp lệ");
       return;
     }
+  }
 
+  const handleSubmit = async () => {
+    if (!validateEmail(email)) {
+      toast.warning("Vui lòng nhập email hợp lệ");
+      return;
+    }
+    
     setLoading(true);
     try {
       const res = await fetch(
@@ -71,6 +87,7 @@ export default function ForgotPasswordPage() {
             label="Nhập email của bạn"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={handleCheckEmail}
             fullWidth
             disabled={loading}
           />

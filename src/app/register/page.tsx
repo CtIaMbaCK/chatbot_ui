@@ -1,19 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import { motion } from "framer-motion";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Paper,
-} from "@mui/material";
 import { useUserSignup } from "@/src/services/hooks/hookAuth";
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import {
+  Box,
+  Container,
+  Paper,
+  TextField,
+  Typography
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+
+interface ValidateEmailFunction {
+  (email: string): boolean;
+}
+
+const validateEmail: ValidateEmailFunction = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -25,8 +34,19 @@ export default function RegisterPage() {
   const router = useRouter();
   const { postUserSignup } = useUserSignup();
 
+    const handleCheckEmail = () => {
+        if (!validateEmail(form.email)) {
+          toast.warning("Vui lòng nhập email hợp lệ");
+          return;
+        }
+      }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateEmail(form.email)) {
+      toast.warning("Vui lòng nhập email hợp lệ");
+      return;
+    }
     try {
       await postUserSignup({
         email: form.email,
@@ -83,7 +103,7 @@ export default function RegisterPage() {
                 required
                 value={form.email}
                 onChange={handleChange}
-                
+                onBlur={handleCheckEmail}
               />
 
               <TextField

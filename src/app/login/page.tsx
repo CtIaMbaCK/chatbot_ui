@@ -27,6 +27,15 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
+interface ValidateEmailFunction {
+  (email: string): boolean;
+}
+
+const validateEmail: ValidateEmailFunction = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 const LoginPage = () => {
   const { postUserLogin } = useUserLogin();
 
@@ -38,6 +47,13 @@ const LoginPage = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handleCheckEmail = () => {
+      if (!validateEmail(form.email)) {
+        toast.warning("Vui lòng nhập email hợp lệ");
+        return;
+      }
+    }
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -94,6 +110,7 @@ const LoginPage = () => {
 
             <Box component="form" sx={{ mt: 3 }}>
               <TextField
+
                 fullWidth
                 label="Email"
                 name="email"
@@ -103,6 +120,7 @@ const LoginPage = () => {
                 placeholder="nguyenvana@email.com"
                 value={form.email}
                 onChange={handleChange}
+                onBlur={handleCheckEmail}
                 required
               />
 
